@@ -143,7 +143,7 @@ And then:
 Comment.query().withScopes((scopes) => scopes.search('life style'))
 ```
 
-THis is a simple example but we could go as deep as we want and adosearch generates the SQL queries we need on the fly.
+This is a simple example but we could go as deep as we want and adosearch generates the SQL queries we need on the fly.
 
 And guess what? It's fully typed 🤩
 
