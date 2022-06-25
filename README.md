@@ -94,7 +94,7 @@ class Post extends BaseModel {
 }
 ```
 
-And then:
+And then we can appply the search scope:
 
 ```ts
 Post.query().withScopes((scopes) => scopes.search('life style'))
@@ -117,7 +117,7 @@ class Comment extends BaseModel {
 }
 ```
 
-And then:
+Apply the search scope:
 
 ```ts
 Comment.query().withScopes((scopes) => scopes.search('life style'))
