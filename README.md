@@ -18,51 +18,31 @@ yarn add adosearch
 
 ## Usage
 
-All you have to do is add it as a scope in your Lucid models. For example:
+All you have to do is is define it as static property on the model class by calling the `search` function from adosearch.
 
 ```ts
-import { DateTime } from 'luxon'
-import { column, BaseModel } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel } from '@ioc:Adonis/Lucid/Orm'
 import { search } from 'adosearch'
 
 export default class User extends BaseModel {
-  @column()
-  public name: string
-
-  @column()
-  public email: string
-
-  @column()
-  public phone: string
-
-  @column()
-  public username: string
-
-  @column({ serializeAs: null })
-  public password: string
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
-
+  // ... other model properties
   public static search = search(this, ['name', 'email', 'username', 'phone'])
 }
 ```
 
-Here we specify the columns we want to search through by calling the `search` function from adosearch which creates a Query Scope.
-
-Now we can apply the search scope:
+And then apply the search scope like so:
 
 ```ts
-User.query().withScopes((scopes) => scopes.search(searchString))
+User.query().withScopes((scopes) => scopes.search('john doe'))
 ```
+
+Just like that we've created a Query Scope that searches for `john doe` in the name, email, username & phone columns of the users table.
 
 We could also specify the columns to search on the fly like so:
 
 ```ts
-User.query().withScopes((scopes) => scopes.search(searchString, ['name', 'email']))
+// search columns name and email for john doe
+User.query().withScopes((scopes) => scopes.search('john doe', ['name', 'email']))
 ```
 
 ## Searching Related Models
@@ -100,7 +80,7 @@ class Comment extends BaseModel {
 }
 ```
 
-Now, say we wanted to search for all the posts in a certain category. We can specify that in our `Post` model:
+Now, say we wanted to search for all the posts for a certain category name. We specify that in our `Post` model:
 
 ```ts
 import { search } from 'adosearch'
@@ -123,7 +103,7 @@ Post.query().withScopes((scopes) => scopes.search('life style'))
 Post.query().withScopes((scopes) => scopes.search('life style', ['title', 'category.name']))
 ```
 
-We could go deeper and search for all comments on posts belonging to a category. We just have to specify that on the `Comment` model:
+We could go deeper and search for all comments on posts belonging to a category. For example:
 
 ```ts
 import { search } from 'adosearch'
@@ -143,8 +123,8 @@ And then:
 Comment.query().withScopes((scopes) => scopes.search('life style'))
 ```
 
-This is a simple example but we could go as deep as we want and adosearch generates the SQL queries we need on the fly.
+This is a simple example but we could go as deep as we want while adosearch generates the complex SQL queries for us on the fly.
 
-And guess what? It's fully typed 🤩
+And guess what? It has type support 🤩
 
 <img width="851" alt="image" src="https://user-images.githubusercontent.com/31254017/175785612-161a9f1c-327c-4919-98c6-4d0983fc727f.png">
