@@ -129,3 +129,8 @@ This is a relatively simple example, but we could go as deep as we want while ad
 And guess what? It has type support 🤩
 
 <img width="851" alt="image" src="https://user-images.githubusercontent.com/31254017/175785612-161a9f1c-327c-4919-98c6-4d0983fc727f.png">
+
+## Limitations
+
+1. Does not yet support the `hasManyThrough` relationship.
+2. The column suggestions in typescript might include getter properties if their return type is `string | number | bigint | boolean | DateTime`.
