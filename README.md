@@ -1,6 +1,7 @@
 # adosearch
 
 Adosearch is an [Adonis.js Query Scope](https://docs.adonisjs.com/guides/models/query-scopes#document) that makes advanced search across multiple models trivial to implement.
+Inspired by the [sofa/eloquence-base](https://github.com/jarektkaczyk/eloquence/wiki/Builder-searchable-and-more) laravel package.
 
 ## Installation
 
@@ -47,7 +48,7 @@ User.query().withScopes((scopes) => scopes.search('john doe', ['name', 'email'])
 
 ## Searching Related Models
 
-Adosearch allows you to search across related models several layers deep. For example, if we have a `Post` model that belongs to a `Category` model and has many comments, we would typically set these relationships up in Adonis like so:
+Adosearch allows you to search across multiple related models several layers deep. For example, if we have a `Post` model that belongs to a `Category` model and has many comments, we would typically set these relationships up in Adonis like so:
 
 ```ts
 import { column, BaseModel, hasMany, HasMany, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
@@ -94,7 +95,7 @@ class Post extends BaseModel {
 }
 ```
 
-And then we can appply the search scope:
+And then we can apply the search scope:
 
 ```ts
 Post.query().withScopes((scopes) => scopes.search('life style'))
@@ -123,7 +124,7 @@ Apply the search scope:
 Comment.query().withScopes((scopes) => scopes.search('life style'))
 ```
 
-This is a simple example but we could go as deep as we want while adosearch generates the complex SQL queries for us on the fly.
+This is a relatively simple example, but we could go as deep as we want while adosearch generates the complex SQL queries for us on the fly.
 
 And guess what? It has type support 🤩
 
