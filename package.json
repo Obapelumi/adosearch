@@ -1,0 +1,52 @@
+{
+  "name": "adosearch",
+  "version": "1.0.0",
+  "description": "typed, deeply nested database search for adonis.js applications ",
+  "main": "build/index.js",
+  "files": [
+    "./build/index.d.ts"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "del-cli build && tsc",
+    "format": "prettier --w ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Obapelumi/adosearch.git"
+  },
+  "keywords": [
+    "search",
+    "adonis.js",
+    "database",
+    "node.js",
+    "relational",
+    "database"
+  ],
+  "author": "obapelumi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Obapelumi/adosearch/issues"
+  },
+  "homepage": "https://github.com/Obapelumi/adosearch#readme",
+  "prettier": {
+    "trailingComma": "es5",
+    "semi": false,
+    "singleQuote": true,
+    "useTabs": false,
+    "quoteProps": "consistent",
+    "bracketSpacing": true,
+    "arrowParens": "always",
+    "printWidth": 100
+  },
+  "dependencies": {
+    "@adonisjs/core": "^5.8.4",
+    "@adonisjs/lucid": "^18.1.0"
+  },
+  "devDependencies": {
+    "@adonisjs/mrm-preset": "^5.0.3",
+    "del-cli": "^4.0.1",
+    "prettier": "^2.7.1",
+    "typescript": "^4.7.4"
+  }
+}
