@@ -1,16 +1,24 @@
 # adosearch
 
-typed, deeply nested database search for adonis.js applications
+Adosearch is an [Adonis.js Query Scope](https://docs.adonisjs.com/guides/models/query-scopes#document) that makes advanced search across multiple models trivial to implement.
 
 ## Installation
+
+With npm
 
 ```
 npm install adosearch
 ```
 
+Or Yarn
+
+```
+yarn add adosearch
+```
+
 ## Usage
 
-Adosearch leverages [Adonis.js' query scopes](https://docs.adonisjs.com/guides/models/query-scopes#document). Here is an example of how you can add a search scope to your Lucid models:
+All you have to do is add it as a scope in your Lucid models. For example:
 
 ```ts
 import { DateTime } from 'luxon'
@@ -43,13 +51,15 @@ export default class User extends BaseModel {
 }
 ```
 
-Here we specify the columns we want to search through by calling the `search` function from adosearch which creates a Query Scope. We can apply your search scope like so:
+Here we specify the columns we want to search through by calling the `search` function from adosearch which creates a Query Scope.
+
+Now we can apply the search scope:
 
 ```ts
 User.query().withScopes((scopes) => scopes.search(searchString))
 ```
 
-You could also specify the columns to search on the fly like so:
+We could also specify the columns to search on the fly like so:
 
 ```ts
 User.query().withScopes((scopes) => scopes.search(searchString, ['name', 'email']))
@@ -57,7 +67,7 @@ User.query().withScopes((scopes) => scopes.search(searchString, ['name', 'email'
 
 ## Searching Related Models
 
-Adosearch allows you to search through related models several layers deep. For example, if we have a `Post` model that has many comments and the `Post` model also belongs to a `Category` model. We would typically set these relationships up in Adonis like so:
+Adosearch allows you to search across related models several layers deep. For example, if we have a `Post` model that belongs to a `Category` model and has many comments, we would typically set these relationships up in Adonis like so:
 
 ```ts
 import { column, BaseModel, hasMany, HasMany, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
@@ -90,7 +100,7 @@ class Comment extends BaseModel {
 }
 ```
 
-Now, say we wanted to search for all posts in a certain category. We can specify that in our `Post` model:
+Now, say we wanted to search for all the posts in a certain category. We can specify that in our `Post` model:
 
 ```ts
 import { search } from 'adosearch'
@@ -113,7 +123,7 @@ Post.query().withScopes((scopes) => scopes.search('life style'))
 Post.query().withScopes((scopes) => scopes.search('life style', ['title', 'category.name']))
 ```
 
-We could go deeper and search for all comments on posts belonging to a category. We would just specify that on the `Comment` model:
+We could go deeper and search for all comments on posts belonging to a category. We just have to specify that on the `Comment` model:
 
 ```ts
 import { search } from 'adosearch'
@@ -133,7 +143,7 @@ And then:
 Comment.query().withScopes((scopes) => scopes.search('life style'))
 ```
 
-We could go as deep as we want and adosearch will generate the SQL queries we need on the fly.
+THis is a simple example but we could go as deep as we want and adosearch generates the SQL queries we need on the fly.
 
 And guess what? It's fully typed 🤩
 
