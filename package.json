@@ -1,6 +1,6 @@
 {
   "name": "adosearch",
-  "version": "0.0.95",
+  "version": "0.1.0",
   "description": "typed, deeply nested database search for adonis.js applications",
   "main": "build/providers/AdosearchProvider.js",
   "typings": "./build/adonis-typings/index.d.ts",
