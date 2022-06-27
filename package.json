@@ -1,14 +1,9 @@
 {
   "name": "adosearch",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "typed, deeply nested database search for adonis.js applications",
-  "main": "build/providers/AdosearchProvider.js",
-  "typings": "./build/adonis-typings/index.d.ts",
-  "files": [
-    "build/adonis-typings",
-    "build/providers",
-    "build/src"
-  ],
+  "main": "build/src/search.js",
+  "typings": "./build/src/search.d.ts",
   "scripts": {
     "pretest": "npm run lint",
     "test": "node -r @adonisjs/require-ts/build/register bin/test.ts",
@@ -71,11 +66,5 @@
     "minNodeVersion": "16.13.1",
     "probotApps": [],
     "runGhActionsOnWindows": false
-  },
-  "adonisjs": {
-    "types": "adosearch",
-    "providers": [
-      "adosearch"
-    ]
   }
 }
