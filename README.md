@@ -27,11 +27,11 @@ All you have to do is is define it as static property on the model class by call
 
 ```ts
 import { BaseModel } from '@ioc:Adonis/Lucid/Orm'
-import { search } from 'adosearch'
+import Search from '@ioc:Adonis/Addons/Search'
 
 export default class User extends BaseModel {
   // ... other model properties
-  public static search = search(this, ['name', 'email', 'username', 'phone'])
+  public static search = Search(this, ['name', 'email', 'username', 'phone'])
 }
 ```
 
@@ -88,11 +88,11 @@ class Comment extends BaseModel {
 Now, say we wanted to search for all the posts for a certain category name. We specify that in our `Post` model:
 
 ```ts
-import { search } from 'adosearch'
+import Search from '@ioc:Adonis/Addons/Search'
 
 class Post extends BaseModel {
   //... other properties
-  public static search = search(this, [
+  public static search = Search(this, [
     // other fields to search
     'category.name',
   ])
@@ -111,11 +111,11 @@ Post.query().withScopes((scopes) => scopes.search('life style', ['title', 'categ
 We could go deeper and search for all comments on posts belonging to a category. For example:
 
 ```ts
-import { search } from 'adosearch'
+import Search from '@ioc:Adonis/Addons/Search'
 
 class Comment extends BaseModel {
   //... other properties
-  public static search = search(this, [
+  public static search = Search(this, [
     // other fields to search
     'post.category.name',
   ])
