@@ -1,13 +1,23 @@
 {
   "name": "adosearch",
-  "version": "0.0.3",
+  "version": "0.0.95",
   "description": "typed, deeply nested database search for adonis.js applications",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "main": "build/providers/AdosearchProvider.js",
+  "typings": "./build/adonis-typings/index.d.ts",
+  "files": [
+    "build/adonis-typings",
+    "build/providers",
+    "build/src"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "del-cli build && tsc",
-    "format": "prettier --w ."
+    "pretest": "npm run lint",
+    "test": "node -r @adonisjs/require-ts/build/register bin/test.ts",
+    "build": "npm run compile",
+    "format": "prettier --w .",
+    "mrm": "mrm --preset=@adonisjs/mrm-preset",
+    "clean": "del-cli build",
+    "compile": "npm run clean && tsc",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -22,7 +32,7 @@
     "database"
   ],
   "author": "obapelumi",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Obapelumi/adosearch/issues"
   },
@@ -37,14 +47,35 @@
     "arrowParens": "always",
     "printWidth": 100
   },
-  "dependencies": {
+  "peerDependencies": {
     "@adonisjs/core": "^5.8.4",
     "@adonisjs/lucid": "^18.1.0"
   },
   "devDependencies": {
+    "@adonisjs/core": "^5.8.4",
+    "@adonisjs/lucid": "^18.1.0",
     "@adonisjs/mrm-preset": "^5.0.3",
+    "@adonisjs/require-ts": "^2.0.12",
+    "@types/node": "^18.0.0",
     "del-cli": "^4.0.1",
+    "mrm": "^4.0.0",
     "prettier": "^2.7.1",
     "typescript": "^4.7.4"
+  },
+  "mrmConfig": {
+    "core": false,
+    "license": "MIT",
+    "services": [
+      "github-actions"
+    ],
+    "minNodeVersion": "16.13.1",
+    "probotApps": [],
+    "runGhActionsOnWindows": false
+  },
+  "adonisjs": {
+    "types": "adosearch",
+    "providers": [
+      "adosearch"
+    ]
   }
 }

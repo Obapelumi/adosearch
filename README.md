@@ -5,16 +5,20 @@ Inspired by the [sofa/eloquence-base](https://github.com/jarektkaczyk/eloquence/
 
 ## Installation
 
-With npm
+Download the package
 
 ```
 npm install adosearch
-```
 
-Or Yarn
+# or using yarn
 
-```
 yarn add adosearch
+```
+
+Configure the package
+
+```
+node ace configure adosearch
 ```
 
 ## Usage
