@@ -1,11 +1,9 @@
 {
   "name": "adosearch",
-  "version": "0.0.1",
-  "description": "typed, deeply nested database search for adonis.js applications ",
+  "version": "0.0.3",
+  "description": "typed, deeply nested database search for adonis.js applications",
   "main": "build/index.js",
-  "files": [
-    "./build/index.d.ts"
-  ],
+  "types": "build/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "del-cli build && tsc",
