@@ -95,31 +95,38 @@ const queryNestedRelations = <Model extends LucidModel>(
   }
 }
 
-export const search = <Model extends LucidModel>(
+export const search = <
+  Model extends LucidModel,
+  Columns extends RelationPath<InstanceType<Model>>[],
+  Computed extends Partial<Record<Columns[number], (search: unknown) => unknown>>
+>(
   _model: Model,
-  defaultColumns: RelationPath<InstanceType<Model>>[]
+  defaultColumns: Columns,
+  defaultComputed?: Computed
 ) =>
   scope(
     (
       mainQuery: ModelQueryBuilderContract<Model>,
-      search: string,
-      columns?: RelationPath<InstanceType<Model>>[]
+      search: unknown,
+      columns?: RelationPath<InstanceType<Model>>[],
+      computed?: Computed
     ) => {
       mainQuery.where((query) => {
         columns = columns || defaultColumns
         const allColumns = Array.from(new Set([...columns, ...defaultColumns]))
         for (const index in allColumns) {
-          let column: RelationPath<InstanceType<Model>> | string = allColumns[index]
-
+          const column: RelationPath<InstanceType<Model>> = allColumns[index]
+          const computedColumn = computed?.[column] ?? defaultComputed?.[column]
+          const computedSearch = computedColumn ? computedColumn(search) : search
           const sections = column.split('.')
-          column = sections[sections.length - 1]
+          const searchedColumn = sections[sections.length - 1]
           sections.splice(sections.length - 1, 1)
 
           queryNestedRelations(
             query,
             query.model,
             sections,
-            (subQ) => subQ.orWhere(column, 'LIKE', `%${search}%`),
+            (subQ) => subQ.orWhere(searchedColumn, 'LIKE', `%${computedSearch}%`),
             (q) => q.orWhereIn
           )
         }

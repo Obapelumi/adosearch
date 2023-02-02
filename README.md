@@ -130,6 +130,43 @@ And guess what? It has type support 🤩
 
 <img width="851" alt="image" src="https://user-images.githubusercontent.com/31254017/175785612-161a9f1c-327c-4919-98c6-4d0983fc727f.png">
 
+## Computed Search
+
+Adosearch also provides a handy way to change the search value for a specific column before searching for it. In the example below we want to search by post status which are stored as numbers in the database:
+
+```ts
+import { column, BaseModel, hasMany, HasMany, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
+import { search } from '../src/search'
+import Category from './Category'
+import Comment from './Comment'
+
+enum PostStatus {
+  draft = 0,
+  public = 1,
+}
+
+export default class Post extends BaseModel {
+  @column()
+  public title: string
+
+  @column({ serialize: (s) => PostStatus[s] })
+  public status: PostStatus
+
+  @belongsTo(() => Category)
+  public category: BelongsTo<typeof Category>
+
+  @hasMany(() => Comment)
+  public comments: HasMany<typeof Comment>
+
+  public static search = search(this, ['title', 'category.name', 'comments.text', 'status'], {
+    status: (s: string) => PostStatus[s.trim().toLowerCase()],
+  })
+}
+```
+
+Now when a user types `draft` or `public` it gets converted to the respective enum values before searching the status column in the Database.
+
+
 ## Limitations
 
 1. Does not yet support the `hasManyThrough` relationship.
