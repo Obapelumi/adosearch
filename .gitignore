@@ -4,3 +4,13 @@ build
 yarn.lock
 package-lock.json
 .env
+coverage
+test/__app
+.DS_STORE
+.nyc_output
+.idea
+*.sublime-project
+*.sublime-workspace
+*.log
+dist
+shrinkwrap.yaml

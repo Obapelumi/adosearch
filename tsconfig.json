@@ -5,7 +5,10 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "types": ["@adonisjs/core", "@adonisjs/lucid"]
+    "types": [
+      "@adonisjs/core",
+      "@adonisjs/lucid"
+    ]
   },
   "extends": "./node_modules/@adonisjs/mrm-preset/_tsconfig"
 }
