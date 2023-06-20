@@ -8,6 +8,7 @@ import {
 } from '@ioc:Adonis/Lucid/Orm'
 import { scope } from '@adonisjs/lucid/build/src/Helpers/scope'
 import { DateTime } from 'luxon'
+import Helpers from '@ioc:Adonis/Core/Helpers'
 
 type Query<Model extends LucidModel> =
   | ModelQueryBuilderContract<Model>
@@ -102,7 +103,8 @@ export const search = <
 >(
   _model: Model,
   defaultColumns: Columns,
-  defaultComputed?: Computed
+  defaultComputed?: Computed,
+  options?: { columnsCase: 'snake' | 'camel' }
 ) =>
   scope(
     (
@@ -119,7 +121,11 @@ export const search = <
           const computedColumn = computed?.[column] ?? defaultComputed?.[column]
           const computedSearch = computedColumn ? computedColumn(search) : search
           const sections = column.split('.')
-          const searchedColumn = sections[sections.length - 1]
+          const searchedColumn =
+            options?.columnsCase === 'camel'
+              ? sections[sections.length - 1]
+              : Helpers.string.snakeCase(sections[sections.length - 1])
+
           sections.splice(sections.length - 1, 1)
 
           queryNestedRelations(
