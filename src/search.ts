@@ -8,7 +8,7 @@ import {
 } from '@ioc:Adonis/Lucid/Orm'
 import { scope } from '@adonisjs/lucid/build/src/Helpers/scope'
 import { DateTime } from 'luxon'
-import Helpers from '@ioc:Adonis/Core/Helpers'
+import Helpers from '@poppinss/utils/build/helpers'
 
 type Query<Model extends LucidModel> =
   | ModelQueryBuilderContract<Model>
