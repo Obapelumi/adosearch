@@ -109,7 +109,7 @@ export const search = <
   scope(
     (
       mainQuery: ModelQueryBuilderContract<Model>,
-      search: unknown,
+      searchText: unknown,
       columns?: RelationPath<InstanceType<Model>>[],
       computed?: Computed
     ) => {
@@ -119,7 +119,7 @@ export const search = <
         for (const index in allColumns) {
           const column: RelationPath<InstanceType<Model>> = allColumns[index]
           const computedColumn = computed?.[column] ?? defaultComputed?.[column]
-          const computedSearch = computedColumn ? computedColumn(search) : search
+          const computedSearch = computedColumn ? computedColumn(search) : searchText
           const sections = column.split('.')
           const searchedColumn =
             options?.columnsCase === 'camel'
