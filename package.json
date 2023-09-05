@@ -115,5 +115,8 @@
     "contents": ".",
     "anyBranch": false
   },
-  "dependencies": {}
+  "dependencies": {
+    "@poppinss/utils": "^5.0.0",
+    "luxon": "^3.4.2"
+  }
 }

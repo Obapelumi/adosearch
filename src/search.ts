@@ -101,8 +101,8 @@ export const search = <
   Columns extends RelationPath<InstanceType<Model>>[],
   Computed extends Partial<Record<Columns[number], (search: unknown) => unknown>>
 >(
-  _model: Model,
-  defaultColumns: Columns,
+  modelOrDefaultColumns1: Columns | Model,
+  modelOrDefaultColumns2?: Model,
   defaultComputed?: Computed,
   options?: { columnsCase: 'snake' | 'camel' }
 ) =>
@@ -113,6 +113,10 @@ export const search = <
       columns?: RelationPath<InstanceType<Model>>[],
       computed?: Computed
     ) => {
+      const defaultColumns = (
+        Array.isArray(modelOrDefaultColumns1) ? modelOrDefaultColumns1 : modelOrDefaultColumns2
+      ) as Columns
+
       mainQuery.where((query) => {
         columns = columns || defaultColumns
         const allColumns = Array.from(new Set([...columns, ...defaultColumns]))
