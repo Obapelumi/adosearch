@@ -98,11 +98,11 @@ const queryNestedRelations = <Model extends LucidModel>(
 
 export const search = <
   Model extends LucidModel,
-  Columns extends RelationPath<InstanceType<Model>>[],
+  Columns extends (RelationPath<InstanceType<Model>> | string)[],
   Computed extends Partial<Record<Columns[number], (search: unknown) => unknown>>
 >(
   modelOrDefaultColumns1: Columns | Model,
-  modelOrDefaultColumns2?: Model,
+  modelOrDefaultColumns2?: Model | Columns,
   defaultComputed?: Computed,
   options?: { columnsCase: 'snake' | 'camel' }
 ) =>
@@ -110,7 +110,7 @@ export const search = <
     (
       mainQuery: ModelQueryBuilderContract<Model>,
       searchText: unknown,
-      columns?: RelationPath<InstanceType<Model>>[],
+      columns?: (RelationPath<InstanceType<Model>> | string)[],
       computed?: Computed
     ) => {
       const defaultColumns = (
@@ -121,7 +121,7 @@ export const search = <
         columns = columns || defaultColumns
         const allColumns = Array.from(new Set([...columns, ...defaultColumns]))
         for (const index in allColumns) {
-          const column: RelationPath<InstanceType<Model>> = allColumns[index]
+          const column = allColumns[index]
           const computedColumn = computed?.[column] ?? defaultComputed?.[column]
           const computedSearch = computedColumn ? computedColumn(search) : searchText
           const sections = column.split('.')
