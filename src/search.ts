@@ -45,11 +45,11 @@ const queryNestedRelations = <Model extends LucidModel>(
   query: Query<Model>,
   model: Model,
   sections: string[],
-  onSubQuery?: (subQuery: Query<Model>) => unknown,
+  onSubQuery?: (subQuery: Query<Model>, relatedTable: string) => unknown,
   onQuery?: (query: Query<Model>) => (column: unknown, subQuery: Query<Model>) => unknown
 ) => {
   if (sections.length < 1) {
-    if (onSubQuery) onSubQuery(query)
+    if (onSubQuery) onSubQuery(query, model.table)
     return
   }
   const relation: any = sections[0]
@@ -67,7 +67,7 @@ const queryNestedRelations = <Model extends LucidModel>(
   if (next) {
     queryNestedRelations(subQuery, relationship.relatedModel(), sections, onSubQuery, onQuery)
   } else if (onSubQuery) {
-    onSubQuery(subQuery)
+    onSubQuery(subQuery, relatedTable)
   }
 
   let localKey = 'id'
@@ -123,7 +123,7 @@ export const search = <
         for (const index in allColumns) {
           const column = allColumns[index]
           const computedColumn = computed?.[column] ?? defaultComputed?.[column]
-          const computedSearch = computedColumn ? computedColumn(search) : searchText
+          const computedSearch = computedColumn ? computedColumn(searchText) : searchText
           const spliTText = options?.spliTText ?? '.'
           const sections = column.split(spliTText)
           const searchedColumn =
@@ -137,8 +137,8 @@ export const search = <
             query,
             query.model,
             sections,
-            (subQ) =>
-              subQ.orWhere(`${query.model.table}.${searchedColumn}`, 'LIKE', `%${computedSearch}%`),
+            (subQ, relatedTable) =>
+              subQ.orWhere(`${relatedTable}.${searchedColumn}`, 'LIKE', `%${computedSearch}%`),
             (q) => q.orWhereIn
           )
         }
