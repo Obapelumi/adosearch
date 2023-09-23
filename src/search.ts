@@ -137,7 +137,8 @@ export const search = <
             query,
             query.model,
             sections,
-            (subQ) => subQ.orWhere(searchedColumn, 'LIKE', `%${computedSearch}%`),
+            (subQ) =>
+              subQ.orWhere(`${query.model.table}.${searchedColumn}`, 'LIKE', `%${computedSearch}%`),
             (q) => q.orWhereIn
           )
         }
