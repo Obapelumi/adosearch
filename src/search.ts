@@ -104,7 +104,7 @@ export const search = <
   modelOrDefaultColumns1: Columns | Model,
   modelOrDefaultColumns2?: Model | Columns,
   defaultComputed?: Computed,
-  options?: { columnsCase: 'snake' | 'camel' }
+  options?: { columnsCase?: 'snake' | 'camel'; spliTText?: string }
 ) =>
   scope(
     (
@@ -124,7 +124,8 @@ export const search = <
           const column = allColumns[index]
           const computedColumn = computed?.[column] ?? defaultComputed?.[column]
           const computedSearch = computedColumn ? computedColumn(search) : searchText
-          const sections = column.split('.')
+          const spliTText = options?.spliTText ?? '.'
+          const sections = column.split(spliTText)
           const searchedColumn =
             options?.columnsCase === 'camel'
               ? sections[sections.length - 1]
