@@ -34,7 +34,7 @@ type RelationPath<Model extends LucidRow, DuplicateModels = Model> = {
  * Sample Output Query
  * collectors.collections.name generates:
  * subQuery = Database.from('collectors')
- * subquery1 = Database.from('collections').select('collectors.ollector_id').where('name', 'LIKE', `%search%`)
+ * subquery1 = Database.from('collections').select('collectors.ollector_id').where('name', 'iLIKE', `%search%`)
  * subQuery.whereIn('collectors.id', subquery1)
  * subQuery.select('collectors.id')
  * subQuery = Database.from('collector_user').whereIn('collector_id', subQuery).select('user_id')
@@ -138,7 +138,7 @@ export const search = <
             query.model,
             sections,
             (subQ, relatedTable) =>
-              subQ.orWhere(`${relatedTable}.${searchedColumn}`, 'LIKE', `%${computedSearch}%`),
+              subQ.orWhere(`${relatedTable}.${searchedColumn}`, 'iLIKE', `%${computedSearch}%`),
             (q) => q.orWhereIn
           )
         }
